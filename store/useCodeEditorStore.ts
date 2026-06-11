@@ -1,3 +1,6 @@
+import { CodeEditorState } from "@/types";
+import { Monaco } from "@monaco-editor/react";
+import { create } from "zustand";
 
 const getInitialState = () => {
     // if we're on the server, return default values
@@ -19,6 +22,39 @@ const getInitialState = () => {
         theme: savedTheme,
         fontSize: Number(savedFontSize),
     };
-
-
 }
+
+export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
+    const initialState = getInitialState();
+
+    return {
+        ...initialState,
+        output: "",
+        isRunning: false,
+        error: null,
+        editor: null,
+        executionResult: null,
+
+        getCode: () => get().editor?.getValue() || "",
+
+        setEditor: (editor: Monaco) => {
+        },
+
+        setTheme: (theme: string) => {
+            localStorage.setItem("editor-theme", theme);
+            set({ theme });
+        },
+
+        setFontSize: (fontSize: number) => {
+            localStorage.setItem("editor-font-size", fontSize.toString());
+            set({ fontSize });
+        },
+
+        setLanguage: (language: string) => {
+        },
+
+        runCode: async () => {
+        },
+    };
+
+})
