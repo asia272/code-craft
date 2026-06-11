@@ -25,4 +25,20 @@ export const syncUser = mutation({
 });
 
 
-0
+export const getUser = query({
+    args: {
+        userId: v.string(),
+    },
+    handler: async (ctx, args) => {
+        if (!args.userId) return null;
+
+        const user = await ctx.db
+            .query("users")
+            .withIndex("by_user_id", (q) =>
+                q.eq("userId", args.userId)
+            )
+            .unique();
+
+        return user;
+    },
+});

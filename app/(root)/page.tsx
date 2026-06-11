@@ -1,15 +1,15 @@
-import { Show, SignUpButton, UserButton } from '@clerk/nextjs'
-import React from 'react'
+import Header from './_components/Header'
 
 const Home = () => {
     return (
-        <div>Home
-            <Show when={"signed-in"}>
-                <UserButton />
-            </Show>
-            <Show when={"signed-out"}>
-                <SignUpButton />
-            </Show>
+        <div>
+            <div>
+                <Header />
+            </div>
+            <div>
+                Main content
+            </div>
+
         </div>
     )
 }
