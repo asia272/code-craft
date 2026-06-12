@@ -38,6 +38,10 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
         getCode: () => get().editor?.getValue() || "",
 
         setEditor: (editor: Monaco) => {
+            const savedCode = localStorage.getItem(`editor-code-${get().language}`);
+            if (savedCode) editor.setValue(savedCode);
+
+            set({ editor });
         },
 
         setTheme: (theme: string) => {
@@ -51,6 +55,19 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
         },
 
         setLanguage: (language: string) => {
+            // Save current language code before switching
+            const currentCode = get().editor?.getValue();
+            if (currentCode) {
+                localStorage.setItem(`editor-code-${get().language}`, currentCode);
+            }
+
+            localStorage.setItem("editor-language", language);
+
+            set({
+                language,
+                output: "",
+                error: null,
+            });
         },
 
         runCode: async () => {

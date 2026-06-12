@@ -1,4 +1,6 @@
+import { Editor } from '@monaco-editor/react'
 import Header from './_components/Header'
+import EditorPanel from './_components/EditorPanel'
 
 const Home = () => {
     return (
@@ -7,6 +9,7 @@ const Home = () => {
                 <Header />
             </div>
             <div>
+                <EditorPanel />
                 Main content
             </div>
 
